@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCI-VR-Robot Multimodal Framework | SURF 2025</title>
+    <style>
+        :root {
+            --bg-deep: #050a14;
+            --bg-panel: #0f1623;
+            --bg-card: #161e2e;
+            --primary: #00f3ff;
+            --secondary: #bd00ff;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --gradient-hero: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Utilities */
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 1rem;
+        }
+        .text-highlight { color: var(--primary); }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        header#hero {
+            background: var(--gradient-hero);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        /* Abstract bg pattern using pseudo element */
+        header#hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(189, 0, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 243, 255, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        .team-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            border-left: 2px solid var(--secondary);
+            padding-left: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--secondary), #7000ff);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            box-shadow: 0 4px 15px rgba(189, 0, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(189, 0, 255, 0.5);
+        }
+
+        .hero-visual {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .hero-visual-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-visual-sub {
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Sections General */
+        section {
+            padding: 5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Overview */
+        .overview-content {
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin-bottom: 3rem;
+        }
+
+        .pill-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .pill-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-top: 3px solid var(--primary);
+        }
+
+        .pill-title {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .pill-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Challenges */
+        #challenges { background: var(--bg-panel); }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .challenge-col h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .custom-list li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .custom-list li::before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Contributions */
+        .contrib-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .contrib-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            position: relative;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contrib-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .contrib-num {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--bg-deep);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .contrib-card h3 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        /* Objectives Layouts */
+        .obj-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .obj-text h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .obj-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        /* Step Diagram */
+        .step-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            position: relative;
+        }
+
+        .step-box {
+            background: var(--bg-panel);
+            padding: 1rem;
+            border-left: 3px solid var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .step-arrow {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Obj 2 Viz */
+        .bar-chart {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+        }
+
+        .bar-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .bar-label {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bar-track {
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0; /* Fallback */
+        }
+
+        /* Obj 3 Cards & Pipeline */
+        .integration-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .int-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .int-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            background: var(--bg-panel);
+            border-radius: var(--border-radius);
+        }
+
+        .pipe-box {
+            min-width: 120px;
+            padding: 0.8rem;
+            text-align: center;
+            background: var(--bg-deep);
+            border: 1px solid var(--primary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            margin: 0 10px;
+        }
+
+        .pipe-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* Results */
+        #results { background: var(--bg-panel); }
+        .result-block {
+            background: var(--bg-card);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius);
+            border-left: 5px solid var(--primary);
+        }
+
+        .stat-highlight {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .role-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: rgba(189, 0, 255, 0.1);
+            color: var(--secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+        }
+
+        .member-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* References & Footer */
+        .ref-list {
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.8rem;
+        }
+
+        footer {
+            background: #020408;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--primary);
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            h1 { font-size: 2rem; }
+            .hero-grid, .grid-2, .contrib-grid, .obj-layout, .integration-cards, .pill-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links { display: none; } /* Simplified for this exercise as requested "no js hamburger" usually requires checkbox hack, keeping it simple */
+
+            /* For this specific request, I will make nav wrap nicely instead of hiding */
+            .nav-content { flex-direction: column; gap: 1rem; }
+            .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+
+            .pipeline-flow { flex-wrap: wrap; justify-content: center; }
+            .pipe-arrow { transform: rotate(90deg); margin: 5px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <div class="nav-logo">BCI · VR · Robot Rehab</div>
+            <div class="nav-links">
+                <a href="#overview">Overview</a>
+                <a href="#challenges">Challenges</a>
+                <a href="#contributions">Contributions</a>
+                <a href="#objective1">Load</a>
+                <a href="#objective2">Channels</a>
+                <a href="#objective3">Integration</a>
+                <a href="#results">Results</a>
+                <a href="#team">Team</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="badge">SURF-2025-0497 · Summer Undergraduate Research Fellowship</div>
+                <h1>Multimodal Integration of Motor Imagery BCI with Adaptive VR Environments for Assistive Robotics</h1>
+                <p class="tagline">A cognitive workload-aware BCI–VR–robot framework for portable, adaptive, and engaging lower-limb rehabilitation.</p>
+
+                <div class="team-info">
+                    <p><strong>Team:</strong> Bihao You, Yize Liu, Yun Zhang, Yutong Zhu, Zihan Yu</p>
+                    <p><strong>Supervisors:</strong> Dr. Rui Yang, Dr. Mengjie Huang</p>
+                    <p>School of Advanced Technology</p>
+                </div>
+
+                <a href="#overview" class="btn">Explore the Framework</a>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-visual-text">BCI · VR · Robot</div>
+                <div class="hero-visual-sub">[Exoskeleton Prototype Placeholder]</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Overview Section -->
+        <section id="overview">
+            <div class="container">
+                <h2 class="section-title">Project Overview</h2>
+                <div class="overview-content">
+                    <p>High-density EEG for motor imagery (MI) BCI is a powerful tool for neuro-rehabilitation, yet it remains difficult to deploy in clinical settings. The primary hurdles include the requirement for numerous electrodes (reducing portability), strong inter-subject variability, and unstable performance when patients experience varying levels of cognitive workload.</p>
+                    <br>
+                    <p>This project proposes a novel <strong>cognitive workload-aware, channel-efficient BCI framework</strong>. By integrating real-time workload detection, hierarchical EEG channel selection, and adaptive VR feedback, we create a robust loop that controls an assistive robot while keeping the user engaged and within an optimal training zone.</p>
+                </div>
+
+                <div class="pill-grid">
+                    <div class="pill-card">
+                        <span class="pill-title">Workload-Aware</span>
+                        <p class="pill-text">Real-time detection of low, medium, and high workload levels to adapt VR task difficulty dynamically.</p>
+                    </div>
+                    <div class="pill-card">
+                        <span class="pill-title">Channel Efficient</span>
+                        <p class="pill-text">Density–Entropy selection (CHDECS) prioritizes information-rich channels, reducing setup time significantly.</p>
+                    </div>
+                    <div class="pill-card">
+                        <span class="pill-title">Tri-Modal Integration</span>
+                        <p class="pill-text">Motor imagery commands drive both virtual avatars and physical assistive exoskeletons simultaneously.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section id="challenges">
+            <div class="container">
+                <h2 class="section-title">Key Challenges</h2>
+                <div class="grid-2">
+                    <div class="challenge-col">
+                        <h3>Signal & Workload Challenges</h3>
+                        <ul class="custom-list">
+                            <li>EEG signals are inherently weak and easily contaminated by artifacts (EMG, EOG, motion).</li>
+                            <li>Cognitive workload strongly affects Motor Imagery performance; excessive load leads to unstable control signals.</li>
+                            <li>Need for robust, real-time workload detection to filter unreliable trials or adapt tasks instantly.</li>
+                        </ul>
+                    </div>
+                    <div class="challenge-col">
+                        <h3>Channel Selection Challenges</h3>
+                        <ul class="custom-list">
+                            <li>High-density caps (100+ channels) are computationally heavy and impractical for daily clinical use.</li>
+                            <li>Inter-subject variability makes "universal" channel sets ineffective.</li>
+                            <li>Classical selection methods often ignore "hard" boundary trials and local electrode interactions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributions Section -->
+        <section id="contributions">
+            <div class="container">
+                <h2 class="section-title">Main Contributions</h2>
+                <div class="contrib-grid">
+                    <!-- Contribution 1 -->
+                    <div class="contrib-card">
+                        <div class="contrib-num">1</div>
+                        <h3>Cognitive Workload-Aware Scheme</h3>
+                        <ul class="custom-list">
+                            <li>Detects three workload levels (Low / Medium / High).</li>
+                            <li>Adapts VR task difficulty in real-time.</li>
+                            <li>Maintains stable, low-noise EEG for better control.</li>
+                        </ul>
+                    </div>
+                    <!-- Contribution 2 -->
+                    <div class="contrib-card">
+                        <div class="contrib-num">2</div>
+                        <h3>Density–Entropy Channel Selection</h3>
+                        <ul class="custom-list">
+                            <li>Dual thresholds focus on "hard" trials near decision boundaries.</li>
+                            <li>Multi-level hierarchy (task, subject, group).</li>
+                            <li>Multi-view collaborative information gain.</li>
+                        </ul>
+                    </div>
+                    <!-- Contribution 3 -->
+                    <div class="contrib-card">
+                        <div class="contrib-num">3</div>
+                        <h3>Tri-Modal Framework</h3>
+                        <ul class="custom-list">
+                            <li>Integration of EEG, VR, and Robot (MileBot Max).</li>
+                            <li>Portable and scalable pipeline.</li>
+                            <li>Gamified rehab training.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objective 1: Load Detection -->
+        <section id="objective1">
+            <div class="container">
+                <h2 class="section-title">Objective 1: Cognitive Load Detection</h2>
+                <div class="obj-layout">
+                    <div class="obj-text">
+                        <h3>Aim & Task Setup</h3>
+                        <p>We aim to develop a real-time method to detect cognitive load. Using standard paradigms (like object assembly), we induce Low (0), Medium (1), and High (2) workload states. The system records EEG during baseline, task, and rest periods.</p>
+
+                        <h3>Two-Stage Classification Strategy</h3>
+                        <p>To handle class imbalance and complexity, we employ a hierarchical strategy. An XGBoost-based classifier first separates <strong>Low</strong> workload from the active states. A second stage then distinguishes between <strong>Medium</strong> and <strong>High</strong> workload. This approach improves overall accuracy to ~89%.</p>
+                    </div>
+
+                    <div class="step-diagram">
+                        <div class="step-box">1. EEG Acquisition (High Density)</div>
+                        <div class="step-arrow">↓</div>
+                        <div class="step-box">2. Preprocessing & Feature Extraction<br><span style="font-weight:normal; font-size:0.8em; color:#94a3b8">(PSD, DE, Fractal Dimension)</span></div>
+                        <div class="step-arrow">↓</div>
+                        <div class="step-box">3. Stage 1 Classifier<br>Low vs. (Medium + High)</div>
+                        <div class="step-arrow">↓</div>
+                        <div class="step-box">4. Stage 2 Classifier<br>Medium vs. High</div>
+                        <div class="step-arrow">↓</div>
+                        <div class="step-box" style="border-color: var(--primary);">5. Output: Workload Level → Adapt VR</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objective 2: Channel Selection -->
+        <section id="objective2">
+            <div class="container">
+                <h2 class="section-title">Objective 2: Density-Entropy Channel Selection</h2>
+                <div class="obj-layout">
+                    <div class="obj-text">
+                        <h3>Motivation: From 118 to 20 Channels</h3>
+                        <p>High-density EEG provides rich data but is burdensome. We need a compact subset (e.g., 20 channels) that preserves decoding accuracy. Our method, <strong>CHDECS</strong>, leverages multi-view collaborative information gain and density-entropy metrics.</p>
+
+                        <h3>Core Concept</h3>
+                        <p>We prioritize "hard" trials—those with high entropy near decision boundaries. By focusing the model on these difficult samples and optimizing across task, subject, and group levels, we identify the most informative electrodes for Motor Imagery.</p>
+                    </div>
+
+                    <div class="bar-chart">
+                        <h3 style="color:white; margin-bottom:1.5rem;">Performance Retention vs. Channel Count</h3>
+
+                        <div class="bar-row">
+                            <div class="bar-label"><span>All 118 Channels (Baseline)</span> <span>~92% Acc</span></div>
+                            <div class="bar-track"><div class="bar-fill" style="width: 95%;"></div></div>
+                        </div>
+
+                        <div class="bar-row">
+                            <div class="bar-label"><span>Top 30 Channels (CHDECS)</span> <span>~91.5% Acc</span></div>
+                            <div class="bar-track"><div class="bar-fill" style="width: 94%;"></div></div>
+                        </div>
+
+                        <div class="bar-row">
+                            <div class="bar-label"><span>Top 20 Channels (CHDECS)</span> <span>~90% Acc</span></div>
+                            <div class="bar-track"><div class="bar-fill" style="width: 91%;"></div></div>
+                        </div>
+
+                        <div class="bar-row">
+                            <div class="bar-label"><span>Top 10 Channels (CHDECS)</span> <span>~87% Acc</span></div>
+                            <div class="bar-track"><div class="bar-fill" style="width: 85%;"></div></div>
+                        </div>
+
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1.5rem;">
+                            Result: Top-20 selection maintains high accuracy while reducing computational cost by >80%.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objective 3: Integration -->
+        <section id="objective3">
+            <div class="container">
+                <h2 class="section-title">Objective 3: BCI–VR–Robot Integration</h2>
+                <div class="integration-cards">
+                    <div class="int-card">
+                        <span class="int-icon">🧠</span>
+                        <h3>EEG Sensor Core</h3>
+                        <p class="role-badge">Emotiv Epoc / Custom Cap</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted)">Collects MI signals using the reduced channel set. Detects intention and workload state.</p>
+                    </div>
+                    <div class="int-card">
+                        <span class="int-icon">🥽</span>
+                        <h3>Adaptive VR Host</h3>
+                        <p class="role-badge">Meta Quest 3</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted)">Visualizes tasks (ball kicking, walking). Adjusts difficulty (speed, obstacles) based on workload.</p>
+                    </div>
+                    <div class="int-card">
+                        <span class="int-icon">🦾</span>
+                        <h3>Assistive Robot</h3>
+                        <p class="role-badge">MileBot Max</p>
+                        <p style="font-size:0.9rem; color:var(--text-muted)">Provides physical joint torque synchronized with VR gait phase. Assistance level modulates dynamically.</p>
+                    </div>
+                </div>
+
+                <!-- Pipeline Diagram -->
+                <div class="pipeline-flow">
+                    <div class="pipe-box">EEG Acquisition</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Preprocessing &<br>CHDECS Selection</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">MI Decoding +<br>Workload Est.</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box" style="border-color:var(--secondary)">VR Difficulty<br>Adapter</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box">Robot Controller<br>(Assistance)</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-box" style="border-style:dashed">Feedback Loop</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experiments & Results -->
+        <section id="results">
+            <div class="container">
+                <h2 class="section-title">Experiments & Results</h2>
+
+                <div class="result-block">
+                    <h3>Cognitive Workload Detection</h3>
+                    <p style="margin-bottom:1rem; color:var(--text-muted);">Tested on 8 subjects performing tasks at 3 difficulty levels.</p>
+                    <ul class="custom-list">
+                        <li><strong>Accuracy:</strong> Two-stage strategy improved accuracy from ~82% to <span class="stat-highlight">~89%</span>.</li>
+                        <li><strong>F1 Score:</strong> Detection of critical Medium/High states improved by ~12%.</li>
+                        <li><strong>Cluster Analysis:</strong> t-SNE shows clear separation between workload classes.</li>
+                    </ul>
+                </div>
+
+                <div class="result-block" style="margin-bottom:0;">
+                    <h3>Channel Selection Effectiveness</h3>
+                    <p style="margin-bottom:1rem; color:var(--text-muted);">Validated on BCI competition datasets (118 channels, 100Hz).</p>
+                    <ul class="custom-list">
+                        <li><strong>Efficiency:</strong> Reducing from 118 to 30 channels retained ~99% of relative performance.</li>
+                        <li><strong>Portability:</strong> A 10-20 channel setup is feasible for rapid clinical deployment.</li>
+                        <li><strong>Robustness:</strong> The method outperforms random selection and standard Fisher score methods.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team">
+            <div class="container">
+                <h2 class="section-title">Our Team</h2>
+
+                <h3 style="color:white; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.5rem;">Supervisors</h3>
+                <div class="team-grid" style="margin-bottom: 3rem;">
+                    <div class="team-card">
+                        <strong>Dr. Rui Yang</strong>
+                        <div class="role-badge">Supervisor</div>
+                        <div class="member-desc">Project Guidance & Strategy</div>
+                    </div>
+                    <div class="team-card">
+                        <strong>Dr. Mengjie Huang</strong>
+                        <div class="role-badge">Supervisor</div>
+                        <div class="member-desc">Technical Oversight</div>
+                    </div>
+                </div>
+
+                <h3 style="color:white; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.5rem;">Research Team</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <strong>Bihao You</strong>
+                        <div class="role-badge">Researcher</div>
+                        <div class="member-desc">Framework Architecture</div>
+                    </div>
+                    <div class="team-card">
+                        <strong>Yize Liu</strong>
+                        <div class="role-badge">Researcher</div>
+                        <div class="member-desc">Workload Modeling</div>
+                    </div>
+                    <div class="team-card">
+                        <strong>Yun Zhang</strong>
+                        <div class="role-badge">Researcher</div>
+                        <div class="member-desc">Channel Optimization</div>
+                    </div>
+                    <div class="team-card">
+                        <strong>Yutong Zhu</strong>
+                        <div class="role-badge">Researcher</div>
+                        <div class="member-desc">VR Integration</div>
+                    </div>
+                    <div class="team-card">
+                        <strong>Zihan Yu</strong>
+                        <div class="role-badge">Researcher</div>
+                        <div class="member-desc">Data Analysis</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- References -->
+        <section id="references">
+            <div class="container">
+                <h2 class="section-title" style="font-size:1.5rem;">Key References</h2>
+                <ol class="ref-list">
+                    <li>Representative work on non-iterative spiking neural networks with attention for motor imagery EEG classification.</li>
+                    <li>Few-shot learning for MI EEG classification and adaptation.</li>
+                    <li>Electrode domain adaptation for cross-electrode MI classification.</li>
+                    <li>Cross-task mental workload recognition with EEG tensor representation and transfer learning.</li>
+                    <li>Affect-driven VR for assisted gait rehabilitation.</li>
+                    <li>Hybrid EEG-based exosuit for upper-limb rehab.</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="font-weight:bold; color:var(--primary); margin-bottom:0.5rem;">SURF 2025</p>
+            <p>© 2025 School of Advanced Technology · Project 0497</p>
+            <a href="#hero">Back to top ↑</a>
+        </div>
+    </footer>
+
+</body>
+</html>
