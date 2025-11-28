@@ -191,6 +191,7 @@ This integration transforms **repetitive rehabilitation** into **interactive, ga
 │
 └─ slide.pdf
    └─ Project presentation slides
+```
 
 ## ⚙️ Getting Started
 This repo is mainly meant to showcase our idea and pipeline, not a polished plug-and-play toolkit (yet 🙂).
