@@ -191,3 +191,48 @@ This integration transforms **repetitive rehabilitation** into **interactive, ga
 │
 └─ slide.pdf
    └─ Project presentation slides
+
+## ⚙️ Getting Started
+This repo is mainly meant to showcase our idea and pipeline, not a polished plug-and-play toolkit (yet 🙂).
+
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/61Ss/Multimodal-Integration-of-Motor-Imagery-BCI-VR-Robots.git
+cd Multimodal-Integration-of-Motor-Imagery-BCI-VR-Robots
+```
+
+## 2. Dependencies
+
+Any recent Python 3.x is usually fine.
+
+Typical libraries we use:
+
+- numpy  
+- pandas  
+- scipy  
+- scikit-learn  
+- matplotlib  
+- mne  
+- xgboost
+
+## 3. Usage Ideas
+
+- **Designing workload pipelines**  
+  Check `data_collection_and_processing/` for data collection and feature extraction logic.
+
+- **Exploring Channel Selection**  
+  Check `channel_selection/` to see the CHDECS implementation.
+
+- **Reference**  
+  Use the provided PDF slides and poster to understand the full system architecture.
+
+> ⚠️ **Note**: The code is mainly for method illustration and reference. It is not guaranteed to run out-of-the-box on every machine without some adaptation.
+
+## 🤝 Acknowledgements
+
+This work was carried out as part of **SURF-2025-0497** at the **School of Advanced Technology**.
+
+- **Supervisors**: Dr. Rui Yang, Dr. Mengjie Huang  
+- **Student Team**: Bihao You, Yize Liu, Yun Zhang, Yutong Zhu, Zihan Yu (in no particular order)
+
