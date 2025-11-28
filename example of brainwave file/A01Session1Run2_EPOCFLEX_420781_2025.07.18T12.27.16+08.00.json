@@ -1,0 +1,89 @@
+{
+    "Markers": [
+        {
+            "deleted": false,
+            "endDatetime": "2025-07-18T12:27:35.930722+08:00",
+            "extras": {
+            },
+            "index": 1,
+            "label": "Eyes Opened",
+            "originalEndDatetime": "2025-07-18T12:27:35.932441+08:00",
+            "originalStartDatetime": "2025-07-18T12:27:20.978538+08:00",
+            "port": "Baseline EmotivPRO",
+            "startDatetime": "2025-07-18T12:27:20.977730+08:00",
+            "type": "interval",
+            "uuid": "29870412-3ba5-4d22-9987-ad64cf3a750d",
+            "value": 1
+        },
+        {
+            "deleted": false,
+            "endDatetime": "2025-07-18T12:27:55.931069+08:00",
+            "extras": {
+            },
+            "index": 2,
+            "label": "Eyes Closed",
+            "originalEndDatetime": "2025-07-18T12:27:55.932031+08:00",
+            "originalStartDatetime": "2025-07-18T12:27:40.931928+08:00",
+            "port": "Baseline EmotivPRO",
+            "startDatetime": "2025-07-18T12:27:40.931664+08:00",
+            "type": "interval",
+            "uuid": "c75184d8-31ff-4d0d-af0f-ee8180cedfb8",
+            "value": 3
+        }
+    ],
+    "connectionType": "dongle",
+    "demographics": {
+        "birthday": null,
+        "countryOfInfluence": {
+            "iso": "",
+            "printable": ""
+        },
+        "countryOfResidence": {
+            "iso": "",
+            "printable": ""
+        },
+        "gender": "U"
+    },
+    "exportApp": "com.emotiv.emotivpro",
+    "exportTime": "2025-07-18T13:13:49.883+08:00",
+    "headsetType": "EPOCFLEX",
+    "mappings": {
+        "CMS": "TP9",
+        "DRL": "TP10",
+        "LA": "FCz",
+        "LB": "CP3",
+        "LC": "C1",
+        "LD": "FC3",
+        "LE": "F1",
+        "LF": "P7",
+        "LG": "FC5",
+        "LH": "F3",
+        "LJ": "Fz",
+        "LK": "CP1",
+        "LL": "C3",
+        "LM": "FC1",
+        "LN": "O1",
+        "LO": "T7",
+        "LP": "F7",
+        "LQ": "AF3",
+        "RA": "P8",
+        "RB": "CP2",
+        "RC": "C4",
+        "RD": "Cz",
+        "RE": "FC2",
+        "RF": "FC6",
+        "RG": "AF4",
+        "RH": "F2",
+        "RJ": "O2",
+        "RK": "CP4",
+        "RL": "CPz",
+        "RM": "C2",
+        "RN": "FC4",
+        "RO": "T8",
+        "RP": "F8",
+        "RQ": "F4"
+    },
+    "montageType": "UNKNOWN",
+    "recordId": "74cad558-0097-49c6-9240-9a2103150174",
+    "user": "bcixjtlu"
+}
